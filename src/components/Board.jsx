@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 
 
 import '../styles/board.css'
+import Game from './Game';
 
 function Board() {
   const [windowSize, setWindowSize] = useState({
@@ -34,9 +35,10 @@ function Board() {
               Cette application n'est pas disponible sur votre appareil merci d'y accéder avec un ordinateur
             </div>
           ) : (
-            <div style={{color : 'white'}}>
+            <div style={{color : 'white'}} className='main_board'>
+              <Game/>
                 <p>Largeur: {windowSize.width}px</p>
-                <p>Hauteur: {windowSize.height}px</p>
+                <p>Hauteur: {windowSize.height}px et test : {windowSize.height - windowSize.height*0.10}</p>
             </div>
           )}
         </div>
