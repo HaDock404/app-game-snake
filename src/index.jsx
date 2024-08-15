@@ -7,6 +7,9 @@ import {
 } from "react-router-dom";
 
 import Home from './pages/Home';
+import SnakeGame from './pages/SnakeGame';
+
+import './styles/normalize.css'
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -14,6 +17,7 @@ root.render(
   <HashRouter>
         <Routes>
           <Route path="/" element={<Home />}/>
+          <Route path="/SnakeGame" element={<SnakeGame />}/>
         </Routes>
   </HashRouter>,
 );
