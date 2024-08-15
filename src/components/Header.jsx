@@ -2,6 +2,7 @@ import '../styles/header.css';
 import { Link } from 'react-router-dom'; //obligatoire avec hashrouter
 import Worldicon from './Wordicon.jsx';
 import Dropdown from './Dropdown.jsx';
+import Snake from './Snake.jsx'
 
 import React, { useState } from 'react'; // Importation de useState pour le menu hamburger
 
@@ -11,7 +12,9 @@ function Header() {
         <header>
             <nav className='header_nav'>
                 <Link to="/" className='home_logo'>
-                    Snake Game
+                    My
+                    <Snake/>
+                    Game
                 </Link>
                 <div className='lang-menu'>
                     <Worldicon />
