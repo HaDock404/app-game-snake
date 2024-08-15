@@ -1,8 +1,32 @@
 import { isMobile, isTablet } from 'react-device-detect';
 /*npm install react-device-detect permet de vérifier le type d'appareil*/
+import React, { useState, useEffect } from "react";
+
+
 import '../styles/board.css'
 
 function Board() {
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Nettoyage de l'écouteur d'événements lors du démontage du composant
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []); // Le tableau vide [] signifie que cet effet n'est exécuté qu'une seule fois au montage du composant
+
     return (
         <div className='board'>
           {isMobile && isTablet ? (
@@ -11,7 +35,8 @@ function Board() {
             </div>
           ) : (
             <div style={{color : 'white'}}>
-                ok
+                <p>Largeur: {windowSize.width}px</p>
+                <p>Hauteur: {windowSize.height}px</p>
             </div>
           )}
         </div>
