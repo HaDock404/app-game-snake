@@ -1,55 +1,73 @@
 import React, { useState, useEffect } from 'react';
 
-function Game() {
-    const [snake, setSnake] = useState([{ x: 10, y: 10 }]);
+function Game(props) {
+    const screen_widht = props.width
+    const screen_height = props.height
+
+    const nb_box_width = Math.floor(screen_widht / 20)
+    const nb_box_height = Math.floor(screen_height / 20)
+
+    const [snake, setSnake] = useState([{ x: 0, y: 0 }]);
     const [food, setFood] = useState({ x: 15, y: 15 });
     const [direction, setDirection] = useState('RIGHT');
     const [gameOver, setGameOver] = useState(false);
 
     const moveSnake = () => {
-        if (gameOver) return;
-    
-        const newSnake = [...snake];
-        const head = { ...newSnake[0] };
-    
-        switch (direction) {
+      if (gameOver) return;
+  
+      const newSnake = [...snake];
+      const head = { ...newSnake[0] };
+  
+      switch (direction) {
           case 'UP':
-            head.y -= 1;
-            break;
+              head.y -= 1;
+              break;
           case 'DOWN':
-            head.y += 1;
-            break;
+              head.y += 1;
+              break;
           case 'LEFT':
-            head.x -= 1;
-            break;
+              head.x -= 1;
+              break;
           case 'RIGHT':
-            head.x += 1;
-            break;
+              head.x += 1;
+              break;
           default:
-            break;
-        }
-    
-        // Ajoute la nouvelle position de la tête
-        newSnake.unshift(head);
-    
-        // Si le serpent mange la nourriture
-        if (head.x === food.x && head.y === food.y) {
-          setFood({
-            x: Math.floor(Math.random() * 20),
-            y: Math.floor(Math.random() * 20)
-          });
-        } else {
+              break;
+      }
+  
+      // Ajoute la nouvelle position de la tête
+      newSnake.unshift(head);
+  
+      // Vérifie les collisions avec le corps du serpent
+      if (newSnake.slice(1).some(segment => segment.x === head.x && segment.y === head.y)) {
+          setGameOver(true);
+          return;
+      }
+  
+      // Si le serpent mange la nourriture
+      if (head.x === food.x && head.y === food.y) {
+          let newFoodPosition;
+          do {
+              newFoodPosition = {
+                  x: Math.floor(Math.random() * nb_box_width),
+                  y: Math.floor(Math.random() * nb_box_height)
+              };
+          } while (newSnake.some(segment => segment.x === newFoodPosition.x && segment.y === newFoodPosition.y));
+  
+          setFood(newFoodPosition);
+      } else {
           // Supprime la dernière partie du serpent pour simuler le déplacement
           newSnake.pop();
-        }
-    
-        // Vérifie les collisions avec les murs
-        if (head.x < 0 || head.y < 0 || head.x >= 20 || head.y >= 20) {
+      }
+  
+      // Vérifie les collisions avec les murs
+      if (head.x < 0 || head.y < 0 || head.x >= nb_box_width || head.y >= nb_box_height) {
           setGameOver(true);
-        } else {
+      } else {
           setSnake(newSnake);
-        }
-      };
+      }
+  };
+  
 
       useEffect(() => {
         const handleKeyPress = (e) => {
@@ -92,14 +110,14 @@ function Game() {
         <div>
           <div style={{ 
             display: 'grid', 
-            gridTemplateColumns: `repeat(20, 20px)`, 
-            gridTemplateRows: `repeat(20, 20px)`, 
+            gridTemplateColumns: `repeat(${nb_box_width}, 20px)`, 
+            gridTemplateRows: `repeat(${nb_box_height}, 20px)`, 
             border: '1px solid #1BEB9E',
             margin: '5px'
           }}>
-            {Array.from({ length: 20 * 20 }).map((_, i) => {
-              const x = i % 20;
-              const y = Math.floor(i / 20);
+            {Array.from({ length: nb_box_width * nb_box_height }).map((_, i) => {
+              const x = i % nb_box_width;
+              const y = Math.floor(i / nb_box_width);
               const isSnake = snake.some(segment => segment.x === x && segment.y === y);
               const isFood = food.x === x && food.y === y;
     

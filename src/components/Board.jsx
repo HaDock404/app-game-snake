@@ -36,9 +36,10 @@ function Board() {
             </div>
           ) : (
             <div style={{color : 'white'}} className='main_board'>
-              <Game/>
-                <p>Largeur: {windowSize.width}px</p>
-                <p>Hauteur: {windowSize.height}px et test : {windowSize.height - windowSize.height*0.10}</p>
+              <Game 
+              width={windowSize.width - 10}
+              height={(windowSize.height - windowSize.height*0.10) - 10}
+              />
             </div>
           )}
         </div>
