@@ -1,0 +1,7 @@
+- Mettre un message de démarrage.
+- Ajouter un score
+- Ajouter une variation de la vitesse du serpent 
+- Ajouter des obtstacles ??
+- Ajouter des balises pour capter les mouvements du joueur
+- Ajouter un message de fin permettant au joueur de rentrer son nom et d'envoyer ses données
+- Faire une API
