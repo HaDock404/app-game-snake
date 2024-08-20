@@ -30,7 +30,7 @@ function Board() {
 
     return (
         <div className='board'>
-          {isMobile && isTablet ? (
+          {isMobile || isTablet ? (
             <div className='alert_message'>
               Cette application n'est pas disponible sur votre appareil merci d'y accéder avec un ordinateur
             </div>

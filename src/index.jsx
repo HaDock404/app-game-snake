@@ -18,7 +18,7 @@ root.render(
   <HashRouter>
     <LanguageProvider>
         <Routes>
-          <Route path="/" element={<Home />}/>
+          <Route path="/" element={<SnakeGame />}/>
           <Route path="/SnakeGame" element={<SnakeGame />}/>
         </Routes>
     </LanguageProvider>
