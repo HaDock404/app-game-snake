@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { LanguageContext } from './LanguageContext';
 
 function Game(props) {
     const screen_widht = props.width
@@ -11,6 +12,24 @@ function Game(props) {
     const [food, setFood] = useState({ x: 15, y: 15 });
     const [direction, setDirection] = useState('RIGHT');
     const [gameOver, setGameOver] = useState(false);
+    const [gameStarted, setGameStarted] = useState(false);
+
+    const { language } = useContext(LanguageContext);
+
+    const welcome = {
+        en: 'Welcome in my Snake Game',
+        fr: 'Bienvenue dans mon jeu du Serpent'
+    };
+
+    const instruction = {
+        en: 'Catch as many apples as possible to get the best score',
+        fr: 'Attrapez le plus de pommes possible afin d\'avoir le meilleur score'
+    };
+
+    const start = {
+      en: 'Start',
+      fr: 'Jouer'
+  };
 
     const moveSnake = () => {
       if (gameOver) return;
@@ -105,38 +124,56 @@ function Game(props) {
         };
     }, [moveSnake]);
 
+    const startGame = () => {
+      setGameStarted(true);
+      setGameOver(false);
+      setSnake([{ x: 0, y: 0 }]);
+      setDirection('RIGHT');
+      setFood({ x: 15, y: 15 });
+    };
+
 
     return (
-        <div>
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: `repeat(${nb_box_width}, 20px)`, 
-            gridTemplateRows: `repeat(${nb_box_height}, 20px)`, 
-            border: '1px solid #1BEB9E',
-            margin: '5px'
-          }}>
-            {Array.from({ length: nb_box_width * nb_box_height }).map((_, i) => {
-              const x = i % nb_box_width;
-              const y = Math.floor(i / nb_box_width);
-              const isSnake = snake.some(segment => segment.x === x && segment.y === y);
-              const isFood = food.x === x && food.y === y;
-    
-              return (
-                <div 
-                  key={i} 
-                  style={{ 
-                    width: '20px', 
-                    height: '20px', 
-                    backgroundColor: isSnake ? '#1BEB9E' : isFood ? 'red' : 'black',
-                    border: '1px solid #1BEB9E' 
-                  }}
-                />
-              );
-            })}
-          </div>
-          {gameOver && <h2>Game Over!</h2>}
-        </div>
-      );
+      <div>
+          {!gameStarted ? (
+              <div>
+                  <h1>{welcome[language]}</h1>
+                  <div>{instruction[language]}</div>
+                  <button onClick={startGame}>{start[language]}</button>
+              </div>
+          ) : (
+              <div>
+                  <div style={{
+                      display: 'grid',
+                      gridTemplateColumns: `repeat(${nb_box_width}, 20px)`,
+                      gridTemplateRows: `repeat(${nb_box_height}, 20px)`,
+                      border: '1px solid #1BEB9E',
+                      margin: '5px'
+                  }}>
+                      {Array.from({ length: nb_box_width * nb_box_height }).map((_, i) => {
+                          const x = i % nb_box_width;
+                          const y = Math.floor(i / nb_box_width);
+                          const isSnake = snake.some(segment => segment.x === x && segment.y === y);
+                          const isFood = food.x === x && food.y === y;
+
+                          return (
+                              <div
+                                  key={i}
+                                  style={{
+                                      width: '20px',
+                                      height: '20px',
+                                      backgroundColor: isSnake ? '#1BEB9E' : isFood ? 'red' : 'black',
+                                      border: '1px solid #1BEB9E'
+                                  }}
+                              />
+                          );
+                      })}
+                  </div>
+                  {gameOver && <h2>Game Over!</h2>}
+              </div>
+          )}
+      </div>
+  );
 }
 
 export default Game
