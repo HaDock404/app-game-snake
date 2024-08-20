@@ -136,10 +136,37 @@ function Game(props) {
     return (
       <div>
           {!gameStarted ? (
-              <div>
-                  <h1>{welcome[language]}</h1>
-                  <div>{instruction[language]}</div>
-                  <button onClick={startGame}>{start[language]}</button>
+              <div style={{
+                backgroundColor: 'black',
+                width: '100%',
+                height: '90vh',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                fontFamily: 'sans-serif'
+              }}>
+                  <h1 style={{
+                    color: '#1BEB9E'
+                  }}
+                  >{welcome[language]}</h1>
+                  <div style={{
+                    color: '#1BEB9E'
+                  }}
+                  >{instruction[language]}</div>
+                  <button onClick={startGame} style={{
+                    backgroundColor: '#1BEB9E',
+                    color: 'black',
+                    border: 'none',
+                    borderRadius: '8px',
+                    padding: '10px 20px',
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                    transition: 'background-color 0.3s, transform 0.3s',
+                    margin: '10px'
+                  }}>{start[language]}</button>
               </div>
           ) : (
               <div>
@@ -169,7 +196,35 @@ function Game(props) {
                           );
                       })}
                   </div>
-                  {gameOver && <h2>Game Over!</h2>}
+                  {gameOver && (
+                        <div style={{
+                            fontFamily: 'sans-serif',
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            textAlign: 'center',
+                            backgroundColor: 'black',
+                            padding: '20px',
+                            borderRadius: '10px',
+                            color: '#1BEB9E'
+                        }}>
+                            <h2>Game Over!</h2>
+                            <button onClick={startGame} style={{
+                              backgroundColor: '#1BEB9E',
+                              color: 'black',
+                              border: 'none',
+                              borderRadius: '8px',
+                              padding: '10px 20px',
+                              fontSize: '16px',
+                              fontWeight: 'bold',
+                              cursor: 'pointer',
+                              boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                              transition: 'background-color 0.3s, transform 0.3s',
+                              margin: '0px'
+                            }}>Restart Game</button>
+                        </div>
+                    )}
               </div>
           )}
       </div>
