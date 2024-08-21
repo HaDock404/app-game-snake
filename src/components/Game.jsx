@@ -13,6 +13,8 @@ function Game(props) {
     const [direction, setDirection] = useState('RIGHT');
     const [gameOver, setGameOver] = useState(false);
     const [gameStarted, setGameStarted] = useState(false);
+    const [speed, setSpeed] = useState(200);  // Vitesse initiale
+    const [applesEaten, setApplesEaten] = useState(0);
 
     const { language } = useContext(LanguageContext);
 
@@ -74,6 +76,8 @@ function Game(props) {
           } while (newSnake.some(segment => segment.x === newFoodPosition.x && segment.y === newFoodPosition.y));
   
           setFood(newFoodPosition);
+          setApplesEaten(applesEaten + 1); // Augmenter le compteur de pommes mangées
+          adjustSpeed(applesEaten + 1);
       } else {
           // Supprime la dernière partie du serpent pour simuler le déplacement
           newSnake.pop();
@@ -85,6 +89,13 @@ function Game(props) {
       } else {
           setSnake(newSnake);
       }
+  };
+
+  const adjustSpeed = (apples) => {
+    let test = 40
+    if (apples < 16) {
+        setSpeed(200 - apples * 10);
+    }
   };
   
 
@@ -117,12 +128,12 @@ function Game(props) {
     
       // Utilise useEffect pour faire bouger le serpent à intervalles réguliers
     useEffect(() => {
-        const gameInterval = setInterval(moveSnake, 200);
+        const gameInterval = setInterval(moveSnake, speed);
 
         return () => {
         clearInterval(gameInterval);
         };
-    }, [moveSnake]);
+    }, [moveSnake, speed]);
 
     const startGame = () => {
       setGameStarted(true);
@@ -130,6 +141,8 @@ function Game(props) {
       setSnake([{ x: 0, y: 0 }]);
       setDirection('RIGHT');
       setFood({ x: 15, y: 15 });
+      setSpeed(200); // Réinitialiser la vitesse
+      setApplesEaten(0); // Réinitialiser le compteur de pommes mangées
     };
 
 
@@ -210,6 +223,9 @@ function Game(props) {
                             color: '#1BEB9E'
                         }}>
                             <h2>Game Over!</h2>
+                            <div style={{
+                              margin: '5px'
+                            }}>Score: {applesEaten}</div>
                             <button onClick={startGame} style={{
                               backgroundColor: '#1BEB9E',
                               color: 'black',
