@@ -92,7 +92,6 @@ function Game(props) {
   };
 
   const adjustSpeed = (apples) => {
-    let test = 40
     if (apples < 16) {
         setSpeed(200 - apples * 10);
     }
