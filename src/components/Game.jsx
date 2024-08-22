@@ -89,6 +89,7 @@ function Game(props) {
   
       // Si le serpent mange la nourriture
       if (head.x === food.x && head.y === food.y) {
+          setPreviousFoodPosition(food);
           let newFoodPosition;
           do {
               newFoodPosition = {
@@ -130,10 +131,12 @@ function Game(props) {
         game_time: gameTime,
         snake_head_position: snakeHeadPosition,
         current_food_position: food,  
-        previous_food_position: previousFoodPosition // Position précédente de la pomme
+        previous_food_position: previousFoodPosition, // Position précédente de la pomme
+        board_width: nb_box_width,
+        board_height: nb_box_height
     };
 
-    fetch('https://f93e-84-121-194-87.ngrok-free.app/recover_data', {
+    fetch('https://0fdf-84-121-194-87.ngrok-free.app/recover_data', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
