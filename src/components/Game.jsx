@@ -16,23 +16,44 @@ function Game(props) {
     const [speed, setSpeed] = useState(200);  // Vitesse initiale
     const [applesEaten, setApplesEaten] = useState(0);
     const [startTime, setStartTime] = useState(null);
+    const [previousFoodPosition, setPreviousFoodPosition] = useState(null);
 
     const { language } = useContext(LanguageContext);
 
     const welcome = {
-        en: 'Welcome in my Snake Game',
-        fr: 'Bienvenue dans mon jeu du Serpent'
+        en: 'Welcome in my Snake Game. Use the directional arrows to play.',
+        fr: 'Bienvenue dans mon jeu du Serpent.'
     };
 
     const instruction = {
-        en: 'Catch as many apples as possible to get the best score',
-        fr: 'Attrapez le plus de pommes possible afin d\'avoir le meilleur score'
+        en: 'Catch as many apples as possible to get the best score.',
+        fr: 'Attrapez le plus de pommes possible afin d\'avoir le meilleur score.'
     };
+
+    const instruction2 = {
+      en: 'Use the directional arrows to play.',
+      fr: 'Utilisez les flèches directionnelles pour jouer.'
+  };
 
     const start = {
       en: 'Start',
       fr: 'Jouer'
-  };
+    };
+
+    const game_over = {
+      en: 'Game Over',
+      fr: 'Perdu!'
+    };
+
+    const restart = {
+      en: 'Restart Game',
+      fr: 'Rejouer'
+    };
+
+    const thx_data = {
+      en: 'Your game data has been sent.',
+      fr: 'Vos données de jeu ont été envoyé.'
+    };
 
     const moveSnake = () => {
       if (gameOver) return;
@@ -107,7 +128,9 @@ function Game(props) {
     const data = {
         score: applesEaten,
         game_time: gameTime,
-        snake_head_position: snakeHeadPosition
+        snake_head_position: snakeHeadPosition,
+        current_food_position: food,  
+        previous_food_position: previousFoodPosition // Position précédente de la pomme
     };
 
     fetch('https://f93e-84-121-194-87.ngrok-free.app/recover_data', {
@@ -128,7 +151,7 @@ function Game(props) {
     .catch(error => {
         console.error('Error:', error);
     });
-};
+  };
   
 
       useEffect(() => {
@@ -200,6 +223,10 @@ function Game(props) {
                     color: '#1BEB9E'
                   }}
                   >{instruction[language]}</div>
+                  <div style={{
+                    color: '#1BEB9E'
+                  }}
+                  >{instruction2[language]}</div>
                   <button onClick={startGame} style={{
                     backgroundColor: '#1BEB9E',
                     color: 'black',
@@ -255,10 +282,14 @@ function Game(props) {
                             borderRadius: '10px',
                             color: '#1BEB9E'
                         }}>
-                            <h2>Game Over!</h2>
+                            <h2>{game_over[language]}</h2>
                             <div style={{
                               margin: '5px'
                             }}>Score: {applesEaten}</div>
+                            <div style={{
+                              margin: '10px'
+
+                            }}>{thx_data[language]}</div>
                             <button onClick={startGame} style={{
                               backgroundColor: '#1BEB9E',
                               color: 'black',
@@ -271,7 +302,7 @@ function Game(props) {
                               boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                               transition: 'background-color 0.3s, transform 0.3s',
                               margin: '0px'
-                            }}>Restart Game</button>
+                            }}>{restart[language]}</button>
                         </div>
                     )}
               </div>
