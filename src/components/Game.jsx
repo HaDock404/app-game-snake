@@ -15,6 +15,7 @@ function Game(props) {
     const [gameStarted, setGameStarted] = useState(false);
     const [speed, setSpeed] = useState(200);  // Vitesse initiale
     const [applesEaten, setApplesEaten] = useState(0);
+    const [startTime, setStartTime] = useState(null);
 
     const { language } = useContext(LanguageContext);
 
@@ -86,6 +87,7 @@ function Game(props) {
       // Vérifie les collisions avec les murs
       if (head.x < 0 || head.y < 0 || head.x >= nb_box_width || head.y >= nb_box_height) {
           setGameOver(true);
+          sendGameData();
       } else {
           setSnake(newSnake);
       }
@@ -96,6 +98,37 @@ function Game(props) {
         setSpeed(200 - apples * 10);
     }
   };
+
+  const sendGameData = () => {
+    const endTime = new Date().getTime();
+    const gameTime = endTime - startTime;
+    const snakeHeadPosition = snake[0];
+
+    const data = {
+        score: applesEaten,
+        game_time: gameTime,
+        snake_head_position: snakeHeadPosition
+    };
+
+    fetch('https://f93e-84-121-194-87.ngrok-free.app/recover_data', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => {
+        if (!response.ok) {
+            console.error('Failed to send data to API');
+            console.log(JSON.stringify(data));
+        } else {
+            console.log('Data sent successfully');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
   
 
       useEffect(() => {
@@ -142,6 +175,7 @@ function Game(props) {
       setFood({ x: 15, y: 15 });
       setSpeed(200); // Réinitialiser la vitesse
       setApplesEaten(0); // Réinitialiser le compteur de pommes mangées
+      setStartTime(new Date().getTime());
     };
 
 
