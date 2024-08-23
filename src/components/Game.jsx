@@ -21,7 +21,7 @@ function Game(props) {
     const { language } = useContext(LanguageContext);
 
     const welcome = {
-        en: 'Welcome in my Snake Game. Use the directional arrows to play.',
+        en: 'Welcome to my Snake Game.',
         fr: 'Bienvenue dans mon jeu du Serpent.'
     };
 
