@@ -10,7 +10,7 @@ function SnakeGame() {
 
     useEffect(() => {
         const checkScreenSize = () => {
-            const isSmall = window.innerWidth < 651 || window.innerHeight < 600;
+            const isSmall = window.innerWidth < 651 || window.innerHeight < 500;
             setIsScreenSmall(isSmall);
         };
 
