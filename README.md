@@ -8,7 +8,7 @@ Here is my Snake application which allows you to play the Snake game on a web pa
 
 This simple game is made with React and distributed with the Github Page. Different sensors make it possible to recover the movements of the snake, then are sent to an API allowing the players' playing methods to be analyzed in order to carry out a gameplay study.  
 
-![Example](./documentation/image1.png)
+![Example](./documentation/Image1.png)
 
 ## Table of Contents
 
