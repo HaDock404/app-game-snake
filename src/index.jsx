@@ -6,7 +6,6 @@ import {
   Route,
 } from "react-router-dom";
 
-import Home from './pages/Home';
 import SnakeGame from './pages/SnakeGame';
 
 import { LanguageProvider } from './components/LanguageContext';
@@ -19,7 +18,6 @@ root.render(
     <LanguageProvider>
         <Routes>
           <Route path="/" element={<SnakeGame />}/>
-          <Route path="/SnakeGame" element={<SnakeGame />}/>
         </Routes>
     </LanguageProvider>
         

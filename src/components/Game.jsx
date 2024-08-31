@@ -51,8 +51,8 @@ function Game(props) {
     };
 
     const thx_data = {
-      en: 'Your game data has been sent.',
-      fr: 'Vos données de jeu ont été envoyé.'
+      en: 'Try again!',
+      fr: 'Essaye encore!'
     };
 
     const moveSnake = () => {
@@ -291,7 +291,6 @@ function Game(props) {
                             }}>Score: {applesEaten}</div>
                             <div style={{
                               margin: '10px'
-
                             }}>{thx_data[language]}</div>
                             <button onClick={startGame} style={{
                               backgroundColor: '#1BEB9E',
